@@ -25,12 +25,14 @@ let remainingLetters = randomWord.length;
 //holds player's guess
 let guess;
 
-
+// Hold Amoujt of guesses left
+let guessesLeft = ["head", "left leg", "right leg", "left arm", "right arm", "body"];
 
 //Shows guesses on dom
 $(".container").html(`
 <h1> Welcome to Trinity's Hangman Game</h1>
 <h2 id="instruct">Guess the word below by using your keyboard</h2>
+<p id="guessesLeft">You have 6 guesses left: ${guessesLeft.join(", ")}<p/>
 <p id="guessFeedback"></p>
 <p style="font-size: 72px" id="guessedArray">${guessedArray.join(" ")}</p>
 `)
@@ -44,6 +46,7 @@ let getGuess = (letter) => {
     if(remainingLetters > 0){
         //gets guess from keypress
         guess = letter;
+        let holdRemaining = remainingLetters;
         //Shows the guessed array
         for (var j = 0; j < randomWord.length++; j++){
             if (randomWord[j] === guess){
@@ -51,10 +54,29 @@ let getGuess = (letter) => {
                 remainingLetters--;
             }
         }
+        $("#guessedArray").html(`${guessedArray.join(" ")}`);
+        if (holdRemaining == remainingLetters){
+            guessesLeft.shift();
+            if (guessesLeft.length > 0){
+                
+                $("#guessesLeft").html(`You have ${guessesLeft.length} guesses left: ${guessesLeft.join(", ")}`);
+                console.log(guessesLeft.length);
+                
+    
+            } else {
+                $("#instruct").html(`Good Job! the answer was:`);
+                $("#guessesLeft").html(`You have ${guessesLeft.length} guesses left.`);
+                $("#guessedArray").html(`${randomWord}`);
+                
+            }
+            
+        }
 
-    //Update answerArray and remaining letters for each correct guess
-    $("#guessedArray").html(`${guessedArray.join(" ")}`);
-    console.log(remainingLetters);
+        //Update Guesses Left message
+
+        //Update answerArray and remaining letters for each correct guess
+        
+        // console.log(remainingLetters);
     } else {
         $("#instruct").html(`Good Job! the answer was:`);
         $("#guessedArray").html(`${randomWord}`);
@@ -148,5 +170,12 @@ $(document).keyup(function (key){
 });
 
 
+
 //Limit guesses
 //Fix how player can guess the same letter multipl ties and the remaining letters will still decrese. 
+//Tell player what to dowhen they finish
+//allow player to select list
+//allow player to add a word
+//add styling
+//add letter buttons for mobile
+//add more messages for fun user interaction
