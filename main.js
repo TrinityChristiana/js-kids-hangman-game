@@ -45,11 +45,9 @@ let lettersGuessed = [];
 //Main Game Code
 let getGuess = (guess) => {
     if(remainingLetters > 0){
-        console.log(guess);
         //gets guess from keypress
         if (lettersGuessed.includes(guess)){
             $("#userFeedback").html('You aready guess this letter');
-            console.log("guessed");
         } else {
             $("#userFeedback").html('');
             lettersGuessed.push(guess);
@@ -76,7 +74,6 @@ let getGuess = (guess) => {
         }    
         $('#guessedLetters').html(`${lettersGuessed.join(", ")}`)
     } else {
-        console.log("remaing Letters are not > 0");
         $("#instruct").html(`Good Job! the answer was:`);
         $("#guessesLeft").html(`Refresh to play again!`);
         $("#guessedArray").html(`${randomWord}`);
