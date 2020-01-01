@@ -39,11 +39,10 @@ $(".container").html(`
 <p style="font-size: 72px" id="guessedLetters"></p>
 `)
 
-
 //Gets the guess from the user
-
 let lettersGuessed = [];
 
+//Main Game Code
 let getGuess = (guess) => {
     if(remainingLetters > 0){
         console.log(guess);
@@ -84,124 +83,14 @@ let getGuess = (guess) => {
     }
 };
 
-
-
 $(document).keypress(function(event){
-    getGuess(String.fromCharCode(event.which)); 
+    let letter = String.fromCharCode(event.which)
+    if (/[a-z]/i.test(letter)) {
+        getGuess(letter);
+    }
+     
 });
 
-
-//9 lines
-// document.onkeypress = function(evt) {
-//     evt = evt || window.event;
-//     var charCode = evt.which;
-//     var charStr = String.fromCharCode(charCode);
-//     if (/[a-z]/i.test(charStr)) {
-//         getGuess(charStr);
-//         console.log(charStr);
-//     }
-// };
-
-/* // Check out this code to change
-function myFunction(e){
-    var x=e.keyCode;
-    var keychar=String.fromCharCode(x);
-    alert("Key " + keychar + " was pressed down");
-}
-var myEl = document.getElementById('myId');
-myEl.onkeydown = myFunction;
- */
-
-
-/* //82 lines (yikes)!!
-//Takes keypressed as a guess
-$(document).keyup(function (key){
-    switch (key.keyCode){
-        case 65:
-            getGuess("a");
-            break;
-        case 66:
-            getGuess("b");
-            break;
-        case 67:
-            getGuess("c");
-            break;
-        case 68:
-            getGuess("d");
-            break;
-        case 69:
-            getGuess("e");
-            break;
-        case 70:
-            getGuess("f");
-            break;
-        case 71:
-            getGuess("g");
-            break;
-        case 72:
-            getGuess("h");
-            break;
-        case 73:
-            getGuess("i");
-            break;
-        case 74:
-            getGuess("j");
-            break;
-        case 75:
-            getGuess("k");            
-            break;
-        case 76:
-            getGuess("l");            
-            break;
-        case 77:
-            getGuess("m");            
-            break;
-        case 78:
-            getGuess("n");            
-            break;
-        case 79:
-            getGuess("o");            
-            break;
-        case 80:
-            getGuess("p");            
-            break;
-        case 81:
-            getGuess("q");            
-            break;
-        case 82:
-            getGuess("r");            
-            break;
-        case 83:
-            getGuess("s");            
-            break;
-        case 84:
-            getGuess("t");            
-            break;
-        case 85:
-            getGuess("u");            
-            break;
-        case 86:
-            getGuess("v");            
-            break;
-        case 87:
-            getGuess("w");            
-            break;
-        case 88:
-            getGuess("x");            
-            break;
-        case 89:
-            getGuess("y");            
-            break;
-        case 90:
-            getGuess("z");            
-            break;
-    }
-}); */
-
-
-//Get rid of cases using event listeners
-//Fix how player can guess the same letter multipl ties and the remaining letters will still decrese. 
-//Tell player what to dowhen they finish
 //allow player to select list
 //allow player to add a word
 //add styling
