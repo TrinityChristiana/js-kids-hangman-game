@@ -20,7 +20,7 @@ let createGuessArray = (word) => {
 let guessedArray = createGuessArray(randomWord);
 
 //Keeps track of remaining letters user has to guess
-let remainingLetters = randomWord.length;
+let remainingLetters = randomWord.length - 1;
 
 //holds player's guess
 let guess;
@@ -33,57 +33,87 @@ $(".container").html(`
 <h1> Welcome to Trinity's Hangman Game</h1>
 <h2 id="instruct">Guess the word below by using your keyboard</h2>
 <p id="guessesLeft">You have 6 guesses left: ${guessesLeft.join(", ")}<p/>
-<p id="guessFeedback"></p>
+<p id="userFeedback"></p>
+
 <p style="font-size: 72px" id="guessedArray">${guessedArray.join(" ")}</p>
+<p style="font-size: 72px" id="guessedLetters"></p>
 `)
 
 
 //Gets the guess from the user
 
+let lettersGuessed = [];
 
-
-let getGuess = (letter) => {
+let getGuess = (guess) => {
     if(remainingLetters > 0){
+        console.log(guess);
         //gets guess from keypress
-        guess = letter;
-        let holdRemaining = remainingLetters;
-        //Shows the guessed array
-        for (var j = 0; j < randomWord.length++; j++){
-            if (randomWord[j] === guess){
-                guessedArray[j] = guess;
-                remainingLetters--;
+        if (lettersGuessed.includes(guess)){
+            $("#userFeedback").html('You aready guess this letter');
+            console.log("guessed");
+        } else {
+            $("#userFeedback").html('');
+            lettersGuessed.push(guess);
+            let holdRemaining = remainingLetters;
+            //Shows the guessed array
+            for (var j = 0; j < randomWord.length++; j++){
+                if (randomWord[j] === guess){
+                    guessedArray[j] = guess;
+                    remainingLetters--;
+                }
             }
-        }
-        $("#guessedArray").html(`${guessedArray.join(" ")}`);
-        if (holdRemaining == remainingLetters){
-            guessesLeft.shift();
-            if (guessesLeft.length > 0){
-                
-                $("#guessesLeft").html(`You have ${guessesLeft.length} guesses left: ${guessesLeft.join(", ")}`);
-                console.log(guessesLeft.length);
-                
-    
-            } else {
-                $("#instruct").html(`Good Job! the answer was:`);
-                $("#guessesLeft").html(`You have ${guessesLeft.length} guesses left.`);
-                $("#guessedArray").html(`${randomWord}`);
-                
+            $("#guessedArray").html(`${guessedArray.join(" ")}`);
+            if (holdRemaining == remainingLetters){
+                guessesLeft.shift();
+                if (guessesLeft.length > 0){
+                    $("#guessesLeft").html(`You have ${guessesLeft.length} guesses left: ${guessesLeft.join(", ")}`);
+                } else {
+                    $("#instruct").html(`Good Job! the answer was:`);
+                    $("#guessesLeft").html(`Refresh to play again!`);
+                    $("#guessedArray").html(`${randomWord}`);
+                    remainingLetters = 0;
+                }
             }
-            
-        }
-
-        //Update Guesses Left message
-
-        //Update answerArray and remaining letters for each correct guess
-        
-        // console.log(remainingLetters);
+        }    
+        $('#guessedLetters').html(`${lettersGuessed.join(", ")}`)
     } else {
+        console.log("remaing Letters are not > 0");
         $("#instruct").html(`Good Job! the answer was:`);
+        $("#guessesLeft").html(`Refresh to play again!`);
         $("#guessedArray").html(`${randomWord}`);
     }
-    
 };
 
+
+
+$(document).keypress(function(event){
+    getGuess(String.fromCharCode(event.which)); 
+});
+
+
+//9 lines
+// document.onkeypress = function(evt) {
+//     evt = evt || window.event;
+//     var charCode = evt.which;
+//     var charStr = String.fromCharCode(charCode);
+//     if (/[a-z]/i.test(charStr)) {
+//         getGuess(charStr);
+//         console.log(charStr);
+//     }
+// };
+
+/* // Check out this code to change
+function myFunction(e){
+    var x=e.keyCode;
+    var keychar=String.fromCharCode(x);
+    alert("Key " + keychar + " was pressed down");
+}
+var myEl = document.getElementById('myId');
+myEl.onkeydown = myFunction;
+ */
+
+
+/* //82 lines (yikes)!!
 //Takes keypressed as a guess
 $(document).keyup(function (key){
     switch (key.keyCode){
@@ -165,13 +195,11 @@ $(document).keyup(function (key){
         case 90:
             getGuess("z");            
             break;
-
     }
-});
+}); */
 
 
-
-//Limit guesses
+//Get rid of cases using event listeners
 //Fix how player can guess the same letter multipl ties and the remaining letters will still decrese. 
 //Tell player what to dowhen they finish
 //allow player to select list
