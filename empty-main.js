@@ -155,9 +155,7 @@ let runGameCode = () => {
 
 runGameCode();
 
-
 //allow player to select list
 //allow player to add a word
 //add styling
 //add letter buttons for mobile
-//add more messages for fun user interaction

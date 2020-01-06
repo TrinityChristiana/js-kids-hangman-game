@@ -90,6 +90,6 @@ $(document).keypress(function(event){
 
 //allow player to select list
 //allow player to add a word
-//add styling
-//add letter buttons for mobile
 //add more messages for fun user interaction
+//add buttons for user input and style them (bootstrap)
+//have it easy to use on mobile devices
